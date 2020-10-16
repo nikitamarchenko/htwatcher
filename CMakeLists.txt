@@ -48,6 +48,8 @@ else ()
     message(STATUS "Backtrace Not Found")
 endif ()
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
 
 add_executable(htwatcher
         src/htwatcher.cpp
@@ -64,6 +66,7 @@ target_link_libraries(htwatcher
         -Wl,--whole-archive ${DPDK_LIBRARIES} -Wl,--no-whole-archive
         numa
         pcap
+        Threads::Threads
         ${CMAKE_DL_LIBS}
         ${Backtrace_LIBRARIES}
         )
