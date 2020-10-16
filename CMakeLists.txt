@@ -70,11 +70,7 @@ add_dependencies(htwatcher
 target_link_libraries(htwatcher
         PRIVATE
         -rdynamic
-        pcapplusplus
         dpdk_headers
-        zeromq
-        protobuf
-        zeromq
         Boost::headers
         Boost::filesystem
         Boost::log
