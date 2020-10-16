@@ -28,18 +28,9 @@ set_property(DIRECTORY PROPERTY EP_BASE ${CMAKE_BINARY_DIR}/subprojects)
 set(STAGED_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/stage)
 message(STATUS "${PROJECT_NAME} staged install: ${STAGED_INSTALL_PREFIX}")
 
-list(APPEND BOOST_COMPONENTS_REQUIRED filesystem test_exec_monitor stacktrace_backtrace system atomic log program_options context)
-set(Boost_MINIMUM_REQUIRED 1.71.0)
 
 add_subdirectory(external/upstream)
 
-# TODO: move to superbuild pattern after clion support it
-# https://github.com/dev-cafe/cmake-cookbook/tree/v1.0/chapter-08/recipe-02
-find_package(Boost
-        ${Boost_MINIMUM_REQUIRED}
-        COMPONENTS
-        ${BOOST_COMPONENTS_REQUIRED}
-        )
 
 find_library(numa numa)
 
@@ -63,7 +54,6 @@ add_executable(htwatcher
         )
 
 add_dependencies(htwatcher
-        boost_external
         dpdk_external
         )
 
@@ -71,12 +61,6 @@ target_link_libraries(htwatcher
         PRIVATE
         -rdynamic
         dpdk_headers
-        Boost::headers
-        Boost::filesystem
-        Boost::log
-        Boost::program_options
-        Boost::stacktrace_backtrace
-        Boost::context
         -Wl,--whole-archive ${DPDK_LIBRARIES} -Wl,--no-whole-archive
         numa
         pcap
