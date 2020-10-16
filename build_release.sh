@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-export BUILD_TYPE=Debug
+export BUILD_TYPE=Release
 
 . build.sh
